@@ -27,7 +27,8 @@ docker-buildx-plugin docker-compose-plugin
 - I downloaded through Docker Compose using the following commands:
 - mkdir -p ~/uptime-kuma && cd ~/uptime-kuma (to make a new directory and be in it)
 - nano docker-compose.yml (Scripting)
-- We will not be in the nano mode and this is what it will contain: services:  
+- We will be in the nano mode and this is what it will contain:  
+  services:    
   uptime-kuma:  
   image: louislam/uptime-kuma:2  
     container_name: uptime-kuma  
@@ -67,4 +68,29 @@ docker-buildx-plugin docker-compose-plugin
 - I was able to disable the password authentication by nano /etc/ssh/ssh_config and scrolling into you see a "PasswordAuthentication yes". You edit the yes to a no
 - I installed a firewall for the second task of this section using: sudo apt update && sudo apt install -y ufw
 - I enabled the firewall where only the SSH and the Uptime-Kuma ports are open
-- 
+- As stated from the assignment, I installed unattended-upgrades(ubuntu) so that I can get upgrades automatically
+  sudo apt update ** sudo apt install -y unattended-upgrades  
+  sudo dpkg-reconfigure -plow unattended-upgrades (enabling)
+# Backups and Restore Drill
+- I made a script that allows me to store data using tar into a backup directory
+- I would have to stop the app, store data, and start the app
+- It starts with making a directory in home, which i named ~/backup.sh and then scripting it using nano
+- Code:  
+  #!/bin/bash  
+  mkdir -p ~/backups  
+  cd /home/ett1501/uptime-kuma  
+  sudo docker compose stop  
+  sudo tar -czf ~/bakcups/bakcup-$(date +%s).tar.gz data  
+  sudo docker compose start  
+  ls -t ~/backups/bakcup-*.tar.gz | tail -n +8 | xargs -r rm
+  - after making the script I would Backup the VM on proxmox
+    Left side, Backup > Backup now
+  -  I went to my online program and edited around a couple of areas
+  -  I ran my nano program and stopped the process of the program
+  -  I removed the data that was stored and started the program back up again, leading me to a brand new page  
+    
+
+  
+  
+    
+  
